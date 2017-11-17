@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Евгения Остапенко](https://up.htmlacademy.ru/javascript/11/user/474979).
-* Наставник: `Неизвестно`.
+* Наставник: [Игорь Шевченко] (https://htmlacademy.ru/profile/id149304).
 
 ---
 
