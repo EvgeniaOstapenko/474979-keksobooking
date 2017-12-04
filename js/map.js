@@ -10,9 +10,9 @@ var checkin = ["12:00", "13:00", "14:00"];
 var checkout = ["12:00", "13:00", "14:00"];
 var features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
 
-var arr = [];
+var massif = [];
 
-for (i = 1; i <= 8; i++) {
+for ( var i = 1; i <= 8; i++) {
   var index = random(1,8);
   var obj = {
     "author": {
@@ -29,21 +29,21 @@ for (i = 1; i <= 8; i++) {
       "address": function() {
 		  return location.x.toString()+', '+location.y.toString()
 	    },
-      "price": random(1000, 1000000),
+      "price":random(1000, 1000000),
       "type":type[index] ,
-      "rooms": random(1, 5),
-      "guests": random(1, 8),
+      "rooms":random(1, 5),
+      "guests":random(1, 8),
       "checkin":checkin[index],
       "checkout":checkout[index],
       "features":features[index],
       "description":'',
-      "photos":[],
+      "photos":[]
    }
 
   };
 
-  arr.push(obj);
-};
+  massif.push(obj);
+}
 
 
 var el = document.querySelector(".map--faded");
@@ -51,47 +51,47 @@ var el = document.querySelector(".map--faded");
 
 var fragment = document.createDocumentFragment();
 
-for (i = 0; i < 8; i++){
+for (var i = 0; i < 8; i++){
 
-  var button = document.createElement("button");
-	    button.className = "map__pin";
-	    button.setAttribute("style", "left:" + arr[i].location.x + 'px' + ", top:" + arr[i].location.y + 'px');
+  var elementButton = document.createElement("button");
+      elementButton .className = "map__pin";
+      elementButton .setAttribute("style", "left:" + massif[i].location.x + 'px' + ", top:" + massif[i].location.y + 'px');
 
 	var img = document.createElement("img");
-	    img.setAttribute("scr", arr[i].author.avatar);
+	    img.setAttribute("scr", massif[i].author.avatar);
 	    img.setAttribute("width", "40");
 	    img.setAttribute("height", "40");
 	    img.setAttribute("draggable","false");
 
-	button.appendChild(img);
+  elementButton.appendChild(img);
 
-	fragment.appendChild(button);
-};
+	fragment.appendChild(elementButton);
+}
 
 var insertEl = document.querySelector(".map__pins");
     insertEl.appendChild(fragment);
 
 var mapCardTemplate = document.querySelector('template').content.querySelector('.map__card');
 
-for (i = 0; i < arr.length; i++) {
+for (i = 0; i < massif.length; i++) {
   var mapCard = mapCardTemplate.cloneNode(true);
-      mapCard.querySelector('h3').textContent = arr[i].offer.title;
-      mapCard.querySelector('small').textContent = arr[i].offer.address;
-      mapCard.querySelector('.popup__price').textContent = arr[i].offer.price + '&#x20bd;/ночь';
+      mapCard.querySelector('h3').textContent = massif[i].offer.title;
+      mapCard.querySelector('small').textContent = massif[i].offer.address;
+      mapCard.querySelector('.popup__price').textContent = massif[i].offer.price + '&#x20bd;/ночь';
 
-  if (arr[i].offer.type === 'flat'){
+  if (massif[i].offer.type === 'flat'){
       mapCard.querySelector('h4').textContent = 'Квартира';
-  }else if (arr[i].offer.type === 'bungalo'){
+  }else if (massif[i].offer.type === 'bungalo'){
       mapCard.querySelector('h4').textContent = 'Бунгало';
   }else {
       mapCard.querySelector('h4').textContent = 'Дом';
-  };
+  }
 
-  mapCard.querySelector('p').textContent = arr[i].offer.rooms + 'для' + offer.guests + 'гостей';
-  mapCard.querySelector('p').textContent = 'Заезд после ' + arr[i].offer.checkin + ', выезд до' +
-                                            arr[i].offer.checkout;
-  mapCard.querySelector('.popup__avatar').src = arr[i].author.avatar;
-};
+  mapCard.querySelector('p').textContent = massif[i].offer.rooms + 'для' + massif[i].offer.guests + 'гостей';
+  mapCard.querySelector('p').textContent = 'Заезд после ' + massif[i].offer.checkin + ', выезд до' +
+                             massif[i].offer.checkout;
+  mapCard.querySelector('.popup__avatar').src = massif[i].author.avatar;
+}
 
 
 
