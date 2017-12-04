@@ -87,8 +87,10 @@ for (i = 0; i < massif.length; i++) {
       mapCard.querySelector('h4').textContent = 'Дом';
   }
 
-  mapCard.querySelector('p').textContent = massif[i].offer.rooms + 'для' + massif[i].offer.guests + 'гостей';
-  mapCard.querySelector('p').textContent = 'Заезд после ' + massif[i].offer.checkin + ', выезд до' +
+  var pTag = mapCard .querySelectorAll('p');
+
+  pTag[1].textContent = massif[i].offer.rooms + 'для' + massif[i].offer.guests + 'гостей';
+  pTag[2].textContent = 'Заезд после ' + massif[i].offer.checkin + ', выезд до' +
                              massif[i].offer.checkout;
   mapCard.querySelector('.popup__avatar').src = massif[i].author.avatar;
 }
