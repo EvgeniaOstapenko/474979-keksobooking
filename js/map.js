@@ -1,5 +1,5 @@
 var random = function(min, max) {
-  return Math.random() * (max - min) + min;
+  return (Math.random() * (max - min) + min).toFixed();
 };
 
 var title = ["Большая уютная квартира", "Маленькая неуютная квартира", "Огромный прекрасный дворец",
@@ -13,7 +13,6 @@ var features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditio
 var massif = [];
 
 for ( var i = 1; i <= 8; i++) {
-  var index = random(1,8);
   var obj = {
     "author": {
       "avatar": 'img/avatars/user0' + i + '.png'
@@ -25,17 +24,21 @@ for ( var i = 1; i <= 8; i++) {
     },
 
     "offer": {
-      "title":title[index],
+      "title":title.pop(),
       "address": function() {
 		  return location.x.toString()+', '+location.y.toString()
 	    },
       "price":random(1000, 1000000),
-      "type":type[index] ,
+      "type":type[random(0,2)] ,
       "rooms":random(1, 5),
       "guests":random(1, 8),
-      "checkin":checkin[index],
-      "checkout":checkout[index],
-      "features":features[index],
+      "checkin":checkin[random(0,2)],
+      "checkout":checkout[random(0,2)],
+      "features":features.filter(function(number, index){
+        if (index>random(0, 5)) {
+          return number;
+        };
+      }),
       "description":'',
       "photos":[]
    }
@@ -55,10 +58,10 @@ for (var i = 0; i < 8; i++){
 
   var elementButton = document.createElement("button");
       elementButton .className = "map__pin";
-      elementButton .setAttribute("style", "left:" + massif[i].location.x + 'px' + ", top:" + massif[i].location.y + 'px');
+      elementButton .setAttribute("style", "left:" + massif[i].location.x + 'px' + "; top:" + massif[i].location.y + 'px');
 
 	var img = document.createElement("img");
-	    img.setAttribute("scr", massif[i].author.avatar);
+	    img.setAttribute("src", massif[i].author.avatar);
 	    img.setAttribute("width", "40");
 	    img.setAttribute("height", "40");
 	    img.setAttribute("draggable","false");
@@ -87,6 +90,19 @@ for (i = 0; i < massif.length; i++) {
       mapCard.querySelector('h4').textContent = 'Дом';
   }
 
+  // var feature = mapCard.querySelector('.popup__features');
+  // for(var i = 0; i < li; i++){
+  //   fragment.appendChild(list[i]);
+  // }
+  // ul.appendChild(fragment);
+
+  var feature = mapCard.querySelector('.popup__features');
+  for(var j = 0; j < massif[0].offer.features.length; j++) {
+    var newLi = document.createElement('li');
+    newLi.className = 'feature feature--' + massif[0].offer.features[j];
+    feature.appendChild(newLi);
+
+  }
   var pTag = mapCard .querySelectorAll('p');
 
   pTag[1].textContent = massif[i].offer.rooms + 'для' + massif[i].offer.guests + 'гостей';
@@ -95,6 +111,7 @@ for (i = 0; i < massif.length; i++) {
   mapCard.querySelector('.popup__avatar').src = massif[i].author.avatar;
 }
 
+mapCardTemplate.insertAdjacentHTML('beforeend', '.map__filters-container');
 
 
 
